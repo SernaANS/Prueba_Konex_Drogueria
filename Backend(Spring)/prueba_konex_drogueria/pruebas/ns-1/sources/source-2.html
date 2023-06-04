@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > VentaServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.prueba_konex_drogueria.service</a>
+</div>
+
+<h1>Coverage Summary for Class: VentaServiceImpl (com.prueba_konex_drogueria.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VentaServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.prueba_konex_drogueria.service;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.prueba_konex_drogueria.dto.VentaDTO;
+<i class="no-highlight">4</i>&nbsp;import com.prueba_konex_drogueria.entity.Medicamento;
+<i class="no-highlight">5</i>&nbsp;import com.prueba_konex_drogueria.entity.Venta;
+<i class="no-highlight">6</i>&nbsp;import com.prueba_konex_drogueria.exceptions.medicamento.MedicamentoNotFoundNameAndLaboratoryException;
+<i class="no-highlight">7</i>&nbsp;import com.prueba_konex_drogueria.exceptions.medicamento.MedicamentoNotFoundException;
+<i class="no-highlight">8</i>&nbsp;import com.prueba_konex_drogueria.mapper.VentaMapper;
+<i class="no-highlight">9</i>&nbsp;import com.prueba_konex_drogueria.repository.MedicamentoRepository;
+<i class="no-highlight">10</i>&nbsp;import com.prueba_konex_drogueria.repository.VentaRepository;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">12</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">15</i>&nbsp;import java.util.List;
+<i class="no-highlight">16</i>&nbsp;import java.util.Optional;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;@Service
+<b class="fc"><i class="no-highlight">19</i>&nbsp;public class VentaServiceImpl implements VentaService {</b>
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    @Autowired
+<i class="no-highlight">22</i>&nbsp;    private VentaRepository ventaRepository;
+<i class="no-highlight">23</i>&nbsp;
+<i class="no-highlight">24</i>&nbsp;    @Autowired
+<i class="no-highlight">25</i>&nbsp;    private MedicamentoRepository medicamentoRepository;
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;    public VentaDTO saveVenta(VentaDTO ventaDTO) throws IOException {
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        Optional&lt;Medicamento&gt; medicamento=medicamentoRepository.findByNombreAndLaboratorio(ventaDTO.getMedicamento().getNombre(), ventaDTO.getMedicamento().getLaboratorio());</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        if(!medicamento.isPresent()){</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;            throw new MedicamentoNotFoundNameAndLaboratoryException(ventaDTO.getMedicamento().getNombre(), ventaDTO.getMedicamento().getLaboratorio());}</b>
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        medicamento.get().setCantidadStock(medicamento.get().getCantidadStock()-ventaDTO.getCantidad());</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        medicamentoRepository.save(medicamento.get());</b>
+<i class="no-highlight">35</i>&nbsp;
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        Venta venta=VentaMapper.INSTANCE.DtoToEntity(ventaDTO);</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        venta.setMedicamento(medicamento.get());</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        ventaRepository.save(venta);</b>
+<i class="no-highlight">39</i>&nbsp;
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        return ventaDTO;</b>
+<i class="no-highlight">41</i>&nbsp;    }
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    public List&lt;VentaDTO&gt; getVentas(){
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        return  VentaMapper.INSTANCE.mapToDto(ventaRepository.findAll());</b>
+<i class="no-highlight">46</i>&nbsp;    }
+<i class="no-highlight">47</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-28 22:15</div>
+</div>
+</body>
+</html>
