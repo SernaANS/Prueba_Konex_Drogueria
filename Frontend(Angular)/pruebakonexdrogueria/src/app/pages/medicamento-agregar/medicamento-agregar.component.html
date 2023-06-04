@@ -1,0 +1,58 @@
+<form>
+  <p-card >
+    <div class="card">
+      <div class="formgrid grid">
+        <div class="field col">
+          <p>nombre:</p>
+          <input type="nombre" name="nombre" pInputText [(ngModel)]="nombre" [disabled]="isDisabled" />
+
+          <p>laboratorio:</p>
+          <input
+            type="text"
+            name="laboratorio"
+            pInputText
+            [(ngModel)]="laboratorio"
+            [disabled]="isDisabled" 
+          />
+
+          <p>fechaFabricacion:</p>
+          <p-calendar
+            name="fechaFabricacion"
+            [(ngModel)]="fechaFabricacion"
+            [showIcon]="true"
+            dateFormat="dd-mm-yy"
+            [appendTo]="'body'"
+          ></p-calendar>
+        </div>
+        <div class="field col">
+          
+
+          <p>cantidadStock:</p>
+          <p-inputNumber
+            name="cantidadStock"
+            inputId="integeronly"
+            [(ngModel)]="cantidadStock"
+          >
+          </p-inputNumber>
+
+          <p>valorUnitario:</p>
+          <p-inputNumber
+            name="valorUnitario"
+            inputId="integeronly"
+            [(ngModel)]="valorUnitario"
+          >
+          </p-inputNumber>
+          <p>fechaVencimiento:</p>
+          <p-calendar
+            name="fechaVencimiento"
+            [(ngModel)]="fechaVencimiento"
+            [showIcon]="true"
+            dateFormat="dd-mm-yy"
+            [appendTo]="'body'"
+          ></p-calendar>
+        </div>
+      </div>
+      <button pButton type="button" label="{{text_button}}" (click)="submitForm()"></button>
+    </div>
+  </p-card>
+</form>
